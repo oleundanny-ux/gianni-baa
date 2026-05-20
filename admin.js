@@ -3,89 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Games — GIANNI</title>
+  <title>Servers — GIANNI</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    .gaming-zone-title {
-      font-size: 2.5rem;
-      font-weight: 900;
-      text-align: center;
-      padding: 3rem 0 2rem;
-      text-shadow: 0 0 30px rgba(255,255,255,0.1);
+    .servers-layout { display:grid; grid-template-columns: 200px 1fr; gap:2rem; }
+    .servers-sidebar { padding-top: 1rem; }
+    .filter-group { margin-bottom: 1.5rem; }
+    .filter-title { font-size:0.8rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:0.75rem; }
+    .filter-btn {
+      display:block;
+      width:100%;
+      padding:0.5rem 0.75rem;
+      background:none;
+      border:none;
+      color:var(--text-muted);
+      text-align:left;
+      cursor:pointer;
+      border-radius:8px;
+      font-size:0.875rem;
+      transition:all 0.2s;
+      margin-bottom:0.2rem;
     }
-    .games-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      max-width: 900px;
-      margin: 0 auto;
+    .filter-btn:hover { background:var(--bg-card2); color:var(--text); }
+    .filter-btn.active { background:rgba(124,58,237,0.15); color:var(--primary-light); font-weight:600; }
+    .servers-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.25rem; }
+    .server-card {
+      background:var(--bg-card);
+      border:1px solid var(--border-light);
+      border-radius:16px;
+      padding:1.25rem;
+      transition:all 0.3s;
+      cursor:pointer;
     }
-    .game-card {
-      border-radius: 20px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      position: relative;
+    .server-card:hover { border-color:var(--primary); transform:translateY(-2px); }
+    .server-card-header { display:flex; align-items:center; gap:0.875rem; margin-bottom:0.875rem; }
+    .server-icon {
+      width:48px;
+      height:48px;
+      border-radius:12px;
+      background:linear-gradient(135deg, var(--primary), var(--blue));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.25rem;
+      flex-shrink:0;
     }
-    .game-card:hover { transform: translateY(-6px); }
-    .game-card-among {
-      background: #1a0505;
-      border: 2px solid #ef4444;
-      box-shadow: 0 0 20px rgba(239,68,68,0.3);
+    .server-name { font-weight:700; font-size:0.9rem; }
+    .server-members { font-size:0.75rem; color:var(--text-muted); }
+    .server-desc { font-size:0.8rem; color:var(--text-muted); margin:0.5rem 0 1rem; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .server-footer { display:flex; align-items:center; justify-content:space-between; }
+    .add-server-btn {
+      background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color:white;
+      border:none;
+      border-radius:10px;
+      padding:0.65rem 2rem;
+      font-size:0.9rem;
+      font-weight:700;
+      cursor:pointer;
+      margin-bottom:1.5rem;
+      box-shadow:0 0 20px var(--primary-glow);
     }
-    .game-card-among:hover { box-shadow: 0 0 40px rgba(239,68,68,0.5); }
-    .game-card-uno {
-      background: #0a1a2a;
-      border: 2px solid #3b82f6;
-      box-shadow: 0 0 20px rgba(59,130,246,0.3);
-    }
-    .game-card-uno:hover { box-shadow: 0 0 40px rgba(59,130,246,0.5); }
-    .game-card-music {
-      background: #0a1a0a;
-      border: 2px solid #10b981;
-      box-shadow: 0 0 20px rgba(16,185,129,0.3);
-    }
-    .game-card-music:hover { box-shadow: 0 0 40px rgba(16,185,129,0.5); }
-    .game-inner {
-      padding: 2.5rem 1.5rem;
-      text-align: center;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .game-emoji { font-size: 5rem; margin-bottom: 0.5rem; }
-    .game-name { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .game-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; }
-    .game-btn {
-      padding: 0.65rem 2rem;
-      border-radius: 50px;
-      font-size: 0.875rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .btn-among { background: #ef4444; color: white; }
-    .btn-among:hover { background: #dc2626; }
-    .btn-uno { background: #3b82f6; color: white; }
-    .btn-uno:hover { background: #2563eb; }
-    .btn-music-game { background: #10b981; color: white; }
-    .btn-music-game:hover { background: #059669; }
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      max-width: 900px;
-      margin: 3rem auto 0;
-    }
-    @media (max-width: 768px) {
-      .games-grid { grid-template-columns: 1fr; }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
-    }
+    @media (max-width:768px) { .servers-layout { grid-template-columns:1fr; } .servers-sidebar { display:none; } }
   </style>
 </head>
 <body>
@@ -105,60 +84,31 @@
   </nav>
 
   <div class="page">
-    <div class="container">
-      <div class="gaming-zone-title">🎮 Gaming Zone</div>
-
-      <div class="games-grid">
-        <div class="game-card game-card-among">
-          <div class="game-inner">
-            <div>
-              <div class="game-emoji">🔴</div>
-              <div class="game-name">Among Us</div>
-              <div class="game-desc">Find the impostor. Play with friends right inside Discord!</div>
-            </div>
-            <button class="game-btn btn-among" onclick="launchGame('among-us')">Launch Game</button>
-          </div>
-        </div>
-
-        <div class="game-card game-card-uno">
-          <div class="game-inner">
-            <div>
-              <div class="game-emoji">🃏</div>
-              <div class="game-name">UNO</div>
-              <div class="game-desc">Classic card game. Up to 10 players per session.</div>
-            </div>
-            <button class="game-btn btn-uno" onclick="launchGame('uno')">Play UNO</button>
-          </div>
-        </div>
-
-        <div class="game-card game-card-music">
-          <div class="game-inner">
-            <div>
-              <div style="font-size:5rem;">💿</div>
-              <div class="game-name">Music Player</div>
-              <div class="game-desc">Stream music in your Discord voice channel.</div>
-            </div>
-            <a href="/music" class="game-btn btn-music-game">Open Player</a>
-          </div>
-        </div>
+    <div class="container section">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <button class="add-server-btn" onclick="addServer()">➕ Add Your Server</button>
       </div>
 
-      <div class="stats-row" id="game-stats">
-        <div class="stat-card">
-          <div class="stat-value" id="games-played">-</div>
-          <div class="stat-label">Your Games</div>
+      <div class="servers-layout">
+        <div class="servers-sidebar">
+          <div class="filter-group">
+            <div class="filter-title">Categories</div>
+            <button class="filter-btn active" onclick="setCategory('All', this)">🌐 All</button>
+            <button class="filter-btn" onclick="setCategory('Gaming', this)">🎮 Gaming</button>
+            <button class="filter-btn" onclick="setCategory('Music', this)">🎵 Music</button>
+            <button class="filter-btn" onclick="setCategory('Community', this)">👥 Community</button>
+          </div>
+          <div class="filter-group">
+            <div class="filter-title">Sort by</div>
+            <button class="filter-btn active" onclick="setSort('Most Active', this)">🔥 Most Active</button>
+            <button class="filter-btn" onclick="setSort('Newest', this)">🆕 Newest</button>
+            <button class="filter-btn" onclick="setSort('Top Rated', this)">⭐ Top Rated</button>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-value">🏆</div>
-          <div class="stat-label">Achievements</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="user-xp">-</div>
-          <div class="stat-label">XP Points</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="user-level-g">-</div>
-          <div class="stat-label">Level</div>
+
+        <div>
+          <div id="servers-loading" style="text-align:center;padding:3rem;"><div class="spinner" style="margin:0 auto;"></div></div>
+          <div class="servers-grid" id="servers-grid" style="display:none;"></div>
         </div>
       </div>
     </div>
@@ -166,17 +116,90 @@
 
   <script src="/js/main.js"></script>
   <script>
-    function launchGame(game) {
-      const names = { 'among-us': 'Among Us', 'uno': 'UNO' };
-      showToast(`Launching ${names[game]}... Connect to a Discord voice channel first!`, 'info');
+    let currentCategory = 'All';
+    let currentSort = 'Most Active';
+
+    function setCategory(cat, el) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-group:first-child .filter-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      loadServers();
+    }
+
+    function setSort(sort, el) {
+      currentSort = sort;
+      document.querySelectorAll('.filter-group:last-child .filter-btn').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      loadServers();
+    }
+
+    function addServer() {
+      showToast('Server submission coming soon!', 'info');
+    }
+
+    function joinServer(id, name) {
+      showToast(`Redirecting to join "${escapeHtml(name)}"...`, 'success');
+      setTimeout(() => window.open('https://discord.gg/your-invite', '_blank'), 500);
+    }
+
+    function getCategoryBadge(cat) {
+      const map = { Gaming: 'badge-gaming', Music: 'badge-music', Community: 'badge-community' };
+      return map[cat] || 'badge-primary';
+    }
+
+    function getCategoryEmoji(cat) {
+      const map = { Gaming: '🎮', Music: '🎵', Community: '👥' };
+      return map[cat] || '🌐';
+    }
+
+    async function loadServers() {
+      document.getElementById('servers-grid').style.display = 'none';
+      document.getElementById('servers-loading').style.display = 'block';
+
+      try {
+        const params = new URLSearchParams({ category: currentCategory, sort: currentSort });
+        const res = await fetch(`/api/servers?${params}`);
+        const servers = await res.json();
+
+        document.getElementById('servers-loading').style.display = 'none';
+        const grid = document.getElementById('servers-grid');
+        grid.style.display = 'grid';
+        grid.innerHTML = '';
+
+        servers.forEach(s => {
+          const card = document.createElement('div');
+          card.className = 'server-card';
+          card.onclick = () => joinServer(s.id, s.name);
+          card.innerHTML = `
+            <div class="server-card-header">
+              <div class="server-icon">${getCategoryEmoji(s.category)}</div>
+              <div>
+                <div class="server-name">${escapeHtml(s.name)}</div>
+                <div class="server-members">👥 ${formatNumber(s.members)} members</div>
+              </div>
+              ${renderStars(s.rating)}
+            </div>
+            <div style="display:flex;gap:0.4rem;margin-bottom:0.5rem;">
+              <span class="badge ${getCategoryBadge(s.category)}">${escapeHtml(s.category)}</span>
+              ${s.active ? '<span class="badge badge-active">Active</span>' : ''}
+            </div>
+            <div class="server-desc">${escapeHtml(s.description)}</div>
+            <div class="server-footer">
+              <span style="font-size:0.8rem;color:var(--text-muted);">⭐ ${s.rating.toFixed(1)}</span>
+              <button class="btn btn-discord btn-sm" onclick="event.stopPropagation();joinServer('${s.id}','${escapeHtml(s.name)}')">Join Server</button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      } catch {
+        document.getElementById('servers-loading').innerHTML = '<p style="color:var(--text-muted)">Failed to load servers.</p>';
+      }
     }
 
     async function init() {
       const user = await initUser();
       if (!user) { window.location.href = '/login'; return; }
-      document.getElementById('games-played').textContent = user.stats.gamesPlayed;
-      document.getElementById('user-xp').textContent = formatNumber(user.stats.xpPoints);
-      document.getElementById('user-level-g').textContent = `Lv.${user.stats.level}`;
+      loadServers();
     }
     init();
   </script>

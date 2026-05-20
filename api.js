@@ -3,64 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaderboards — GIANNI</title>
+  <title>Games — GIANNI</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    .lb-header {
-      text-align: center;
-      padding: 2rem 0;
-    }
-    .lb-header h1 {
-      font-size: 2rem;
+    .gaming-zone-title {
+      font-size: 2.5rem;
       font-weight: 900;
-      background: linear-gradient(135deg, #fbbf24, #f59e0b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      text-align: center;
+      padding: 3rem 0 2rem;
+      text-shadow: 0 0 30px rgba(255,255,255,0.1);
     }
-    .lb-header p { color: var(--text-muted); margin-top: 0.5rem; }
-    .lb-list {
-      max-width: 700px;
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 900px;
       margin: 0 auto;
     }
-    .lb-user-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: var(--primary-dark);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.875rem;
-      flex-shrink: 0;
-    }
-    .lb-user-info { flex: 1; }
-    .lb-username { font-weight: 600; font-size: 0.9rem; }
-    .lb-level { font-size: 0.75rem; color: var(--text-muted); }
-    .lb-xp { text-align: right; }
-    .lb-xp-value { font-weight: 700; color: var(--primary-light); }
-    .lb-tabs {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    .lb-tab {
-      padding: 0.5rem 1.25rem;
-      border-radius: 8px;
-      background: var(--bg-card2);
-      border: 1px solid var(--border-light);
-      color: var(--text-muted);
+    .game-card {
+      border-radius: 20px;
+      overflow: hidden;
       cursor: pointer;
-      font-size: 0.875rem;
-      font-weight: 500;
-      transition: all 0.2s;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
     }
-    .lb-tab:hover { color: var(--text); }
-    .lb-tab.active {
-      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(91,33,182,0.1));
-      color: var(--primary-light);
-      border-color: rgba(124,58,237,0.3);
+    .game-card:hover { transform: translateY(-6px); }
+    .game-card-among {
+      background: #1a0505;
+      border: 2px solid #ef4444;
+      box-shadow: 0 0 20px rgba(239,68,68,0.3);
+    }
+    .game-card-among:hover { box-shadow: 0 0 40px rgba(239,68,68,0.5); }
+    .game-card-uno {
+      background: #0a1a2a;
+      border: 2px solid #3b82f6;
+      box-shadow: 0 0 20px rgba(59,130,246,0.3);
+    }
+    .game-card-uno:hover { box-shadow: 0 0 40px rgba(59,130,246,0.5); }
+    .game-card-music {
+      background: #0a1a0a;
+      border: 2px solid #10b981;
+      box-shadow: 0 0 20px rgba(16,185,129,0.3);
+    }
+    .game-card-music:hover { box-shadow: 0 0 40px rgba(16,185,129,0.5); }
+    .game-inner {
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .game-emoji { font-size: 5rem; margin-bottom: 0.5rem; }
+    .game-name { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .game-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .game-btn {
+      padding: 0.65rem 2rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-among { background: #ef4444; color: white; }
+    .btn-among:hover { background: #dc2626; }
+    .btn-uno { background: #3b82f6; color: white; }
+    .btn-uno:hover { background: #2563eb; }
+    .btn-music-game { background: #10b981; color: white; }
+    .btn-music-game:hover { background: #059669; }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      max-width: 900px;
+      margin: 3rem auto 0;
+    }
+    @media (max-width: 768px) {
+      .games-grid { grid-template-columns: 1fr; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -81,77 +105,78 @@
   </nav>
 
   <div class="page">
-    <div class="container section">
-      <div class="lb-header">
-        <h1>🏆 Leaderboards</h1>
-        <p>Top players ranked by XP and activity</p>
+    <div class="container">
+      <div class="gaming-zone-title">🎮 Gaming Zone</div>
+
+      <div class="games-grid">
+        <div class="game-card game-card-among">
+          <div class="game-inner">
+            <div>
+              <div class="game-emoji">🔴</div>
+              <div class="game-name">Among Us</div>
+              <div class="game-desc">Find the impostor. Play with friends right inside Discord!</div>
+            </div>
+            <button class="game-btn btn-among" onclick="launchGame('among-us')">Launch Game</button>
+          </div>
+        </div>
+
+        <div class="game-card game-card-uno">
+          <div class="game-inner">
+            <div>
+              <div class="game-emoji">🃏</div>
+              <div class="game-name">UNO</div>
+              <div class="game-desc">Classic card game. Up to 10 players per session.</div>
+            </div>
+            <button class="game-btn btn-uno" onclick="launchGame('uno')">Play UNO</button>
+          </div>
+        </div>
+
+        <div class="game-card game-card-music">
+          <div class="game-inner">
+            <div>
+              <div style="font-size:5rem;">💿</div>
+              <div class="game-name">Music Player</div>
+              <div class="game-desc">Stream music in your Discord voice channel.</div>
+            </div>
+            <a href="/music" class="game-btn btn-music-game">Open Player</a>
+          </div>
+        </div>
       </div>
 
-      <div class="lb-tabs">
-        <button class="lb-tab active" onclick="setTab('xp', this)">⭐ XP</button>
-        <button class="lb-tab" onclick="setTab('games', this)">🎮 Games</button>
-        <button class="lb-tab" onclick="setTab('music', this)">🎵 Music</button>
-      </div>
-
-      <div class="lb-list" id="lb-list">
-        <div style="text-align:center;padding:3rem;"><div class="spinner" style="margin:0 auto;"></div></div>
+      <div class="stats-row" id="game-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="games-played">-</div>
+          <div class="stat-label">Your Games</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">🏆</div>
+          <div class="stat-label">Achievements</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="user-xp">-</div>
+          <div class="stat-label">XP Points</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="user-level-g">-</div>
+          <div class="stat-label">Level</div>
+        </div>
       </div>
     </div>
   </div>
 
   <script src="/js/main.js"></script>
   <script>
-    let currentTab = 'xp';
-
-    function setTab(tab, el) {
-      currentTab = tab;
-      document.querySelectorAll('.lb-tab').forEach(t => t.classList.remove('active'));
-      el.classList.add('active');
-      loadLeaderboard();
-    }
-
-    function getRankClass(rank) {
-      if (rank === 1) return 'gold';
-      if (rank === 2) return 'silver';
-      if (rank === 3) return 'bronze';
-      return '';
-    }
-
-    async function loadLeaderboard() {
-      const list = document.getElementById('lb-list');
-      list.innerHTML = '<div style="text-align:center;padding:3rem;"><div class="spinner" style="margin:0 auto;"></div></div>';
-
-      try {
-        const res = await fetch('/api/leaderboard');
-        const data = await res.json();
-
-        list.innerHTML = '';
-        data.forEach(entry => {
-          const item = document.createElement('div');
-          item.className = 'lb-item';
-          item.innerHTML = `
-            <div class="lb-rank ${getRankClass(entry.rank)}">#${entry.rank}</div>
-            <div class="lb-user-avatar">${entry.username.charAt(0).toUpperCase()}</div>
-            <div class="lb-user-info">
-              <div class="lb-username">${escapeHtml(entry.username)}</div>
-              <div class="lb-level">Level ${entry.level}</div>
-            </div>
-            <div class="lb-xp">
-              <div class="lb-xp-value">${formatNumber(entry.xp)} XP</div>
-              <div style="font-size:0.75rem;color:var(--text-muted);">${entry.trend === 'up' ? '▲' : '▼'} Trending</div>
-            </div>
-          `;
-          list.appendChild(item);
-        });
-      } catch {
-        list.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:2rem;">Failed to load leaderboard.</p>';
-      }
+    function launchGame(game) {
+      const names = { 'among-us': 'Among Us', 'uno': 'UNO' };
+      showToast(`Launching ${names[game]}... Connect to a Discord voice channel first!`, 'info');
     }
 
     async function init() {
       const user = await initUser();
       if (!user) { window.location.href = '/login'; return; }
-      loadLeaderboard();
+      document.getElementById('games-played').textContent = user.stats.gamesPlayed;
+      document.getElementById('user-xp').textContent = formatNumber(user.stats.xpPoints);
+      document.getElementById('user-level-g').textContent = `Lv.${user.stats.level}`;
     }
     init();
   </script>
